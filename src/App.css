@@ -70,7 +70,7 @@ body{
   transition-delay: 0.3s;
   opacity: 0;
   left: -50px;
-  bottom: -255px;
+  top: 60px;
   width: 100%;
   border-radius: 10px;
   color: black;
@@ -78,19 +78,26 @@ body{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  
+  
 }
 .tab-container{
   transition:opacity 0s ease-in-out, background-color 0.2s ease,visibility 0s linear 0.5s;
   opacity: 0;
   width: 100%;
-  border-radius: 10px;
+  border-bottom: 2px solid black;
  
 }
 
+.tab-container:last-child{
+  border: none;
+}
+
+
 
 .tab-container:hover{
-  background-color: grey;
-  color: white;
+  background-color: #D3D3D3;
+  
 }
 .history-container > h2{
   margin: 0;
@@ -100,7 +107,8 @@ body{
  opacity: 1;
   background-color: white;
   left: 0;
-  bottom: -255px;
+  top: 60px;
+  animation: move-and-show 1s ease-in-out;
 }
 
 .history-top:hover > .history-bottom > .tab-container{
@@ -113,6 +121,16 @@ body{
   
 }
 
+
+@keyframes move-and-show{
+  0%{
+    transform: translateY(-50px);
+    pointer-events: none;
+  }
+  100%{
+    transform: translateY(0);
+  }
+}
 
 .top{
   width: 100%;

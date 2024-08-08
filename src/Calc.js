@@ -3,6 +3,7 @@ import mario from "./images/super-mario-bros-video-game-jump-11021621a10df8d28e0
 import pika from "./images/pngaaa.com-1709203.png"
 import History from './History';
 import { FaHistory } from "react-icons/fa";
+import { nanoid } from 'nanoid'
 
 function Calc(props) {
     
@@ -14,9 +15,8 @@ function Calc(props) {
 
     const [history,setHistory] = useState(JSON.parse(localStorage.getItem("history")) || [])
 
+
    
-
-
     const myButtons = ['00', '0', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', 'x', '/', '+', '-', '%', '='];
 
     const allowedKeys = new Set(myButtons.concat(['Backspace', 'Enter']));
@@ -30,7 +30,6 @@ function Calc(props) {
    
     const animationLetters = ["C","A","L","C","C","R","E","W"]
 
-   
   
     
     useEffect(() => {
@@ -158,6 +157,8 @@ function Calc(props) {
         
         removeLastHistory();
         localStorage.setItem("history", JSON.stringify(history));
+
+        
         
     }, [history]);
 
@@ -166,6 +167,7 @@ function Calc(props) {
         
         setHistory(prevState => {
             const newHistory = {
+                id:nanoid(),
                 expression:input,
                 result:apiResult
             }
@@ -176,6 +178,7 @@ function Calc(props) {
         })
 
         
+       
     
 
         
@@ -234,10 +237,31 @@ const animation = animationLetters.map((letter,index) => {
     
     
 const myHistory = history.map((hist,index) => {
-    return <History expression = {hist.expression} result = {hist.result} />
+    return <History find = {findandMoveTab} key={hist.id} id = {hist.id} expression = {hist.expression} result = {hist.result} />
 })
 
-console.log(myHistory)
+function findandMoveTab(id){
+
+
+    setHistory(prevState => {
+        
+        const clickedTab = prevState.find(hist => hist.id === id);
+
+        setInput(clickedTab.result);
+        setPrevInput(clickedTab.expression);
+    
+        const newArray = prevState.filter(hist => hist.id !== id);
+        newArray.unshift(clickedTab);
+    
+        return newArray;
+    })
+   
+} 
+
+
+
+
+console.log(history)
     
     return (
         <div id='calc-main'>
