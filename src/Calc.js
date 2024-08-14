@@ -15,7 +15,47 @@ function Calc(props) {
 
     const [history,setHistory] = useState(JSON.parse(localStorage.getItem("history")) || [])
 
+    const [selectedItem,setSelectedItem] = useState("original")
 
+    
+
+
+    const colorObj = {
+        original:{
+            numb:"original-numb",
+            operator:"original-operator",
+            equal:"original-equal"
+        },
+        deuteranopia:{
+            numb:"deuteranopia-numb",
+            operator:"deuteranopia-operator",
+            equal:"deuteranopia-equal"
+        },
+        protanopia:{
+            numb:"protanopia-numb",
+            operator:"protanopia-operator",
+            equal:"protanopia-equal"
+        },
+        tritanopia:{
+            numb:"tritanopia-numb",
+            operator:"tritanopia-operator",
+            equal:"tritanopia-equal"
+        },
+        achromatopsia:{
+            numb:"achromatopsia-numb",
+            operator:"achromatopsia-operator",
+            equal:"achromatopsia-equal"
+        },
+        monochromacy:{
+            numb:"monochromacy-numb",
+            operator:"monochromacy-operator",
+            equal:"monochromacy-equal"
+        }
+
+
+    }
+
+    
    
     const myButtons = ['00', '0', '.', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'C', 'x', '/', '+', '-', '%', '='];
 
@@ -223,12 +263,24 @@ function Calc(props) {
     
     
 
-    const calcButtons = myButtons.map( (btnValue) => (
-            <button className='calc-button' key={btnValue}  onClick={() => handleClick(btnValue)}>
+    const calcButtons = myButtons.map( (btnValue, index) => {
+      
+        let colorClass = "";
+
+        if(index < 12){
+            colorClass = colorObj[selectedItem].numb
+        }else if (index === myButtons.length -1){
+             colorClass =colorObj[selectedItem].equal
+        }else{
+             colorClass = colorObj[selectedItem].operator
+        }
+    
+        return (
+            <button className= {`calc-button ${colorClass}`} key={btnValue} onClick={() => handleClick(btnValue)}>
                 {btnValue}
             </button>
-        )
-    );
+        );
+    });
     
 
 const animation = animationLetters.map((letter,index) => {
@@ -258,20 +310,48 @@ function findandMoveTab(id){
    
 } 
 
+function updateSelect(event){
+        const value = event.target.value
+        setSelectedItem(value)
+}
 
 
 
-console.log(history)
+
+
+
+
+
+
+   
+       
     
+
+
+
+
     return (
         <div id='calc-main'>
             
             
-
+            <div className="select-container">
+            <label htmlFor="color-blindness">Accessibility options:</label>
+            
+            <select id="color-blindness" name="color-blindness" value={selectedItem} onChange={updateSelect}>
+            <option value="original">Original</option>
+            <option value="protanopia">Protanopia</option>
+            <option value="deuteranopia">Deuteranopia</option>
+            <option value="tritanopia">Tritanopia</option>
+            <option value="achromatopsia">Achromatopsia</option>
+            <option value="monochromacy">Monochromacy</option>
+    </select>
+            </div>
 
 
             <div id="miniräknare-three" className="hover calc">
                 
+            
+            
             <div className="history-container">
                 
                 <div className='history-top'>
