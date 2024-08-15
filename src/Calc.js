@@ -5,11 +5,11 @@ import History from './History';
 import { FaHistory } from "react-icons/fa";
 import { nanoid } from 'nanoid'
 
-function Calc(props) {
+function Calc() {
     
     
    
-    const [input, setInput] = useState(""); // State to hold input value
+    const [input, setInput] = useState(""); 
 
     const [prevInput,setPrevInput] = useState("");
 
@@ -335,7 +335,7 @@ function updateSelect(event){
             
             
             <div className="select-container">
-            <label htmlFor="color-blindness">Accessibility options:</label>
+            <label htmlFor="color-blindness">Accessibility options</label>
             
             <select id="color-blindness" name="color-blindness" value={selectedItem} onChange={updateSelect}>
             <option value="original">Original</option>
